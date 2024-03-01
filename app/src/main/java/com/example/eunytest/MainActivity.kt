@@ -18,13 +18,12 @@ class MainActivity : AppCompatActivity() {
 
         binding.button.setOnClickListener {
             viewModel.checkAiApi("1+1이 뭐야")
-            Log.d("Button Click","^^아 왜 안돼애")
 
         }
 
 
-        viewModel.response.observe(this) {
-            binding.tvHelloWorld.text = it
+        viewModel.mainUiState.observe(this) {
+            binding.tvHelloWorld.text = it.response
         }
     }
 }

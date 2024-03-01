@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.eunytest.data.MainUiState
 import com.example.eunytest.data.repository.AiRepository
 import kotlinx.coroutines.launch
 
@@ -12,9 +13,9 @@ class MainViewModel(private val aiRepo: AiRepository = AiRepository()) : ViewMod
 
 
 
-    private var _response = MutableLiveData<String?>()
+    private var _mainUiState = MutableLiveData<MainUiState>()
 
-    val response : LiveData<String?> = _response
+    val mainUiState : LiveData<MainUiState> = _mainUiState
     fun checkAiApi(text: String) {
 
 
@@ -26,7 +27,7 @@ class MainViewModel(private val aiRepo: AiRepository = AiRepository()) : ViewMod
                 Log.d("Connect ChatGPT", "^^ 1. ViewModel")
                 val channelResponse = aiRepo.createChatCompletion(text1).choices.first().message.content
 
-                _response.value = channelResponse
+                _mainUiState.value = MainUiState(response = channelResponse)
 
             }.onSuccess {
                 Log.d("Connect ChatGPT","^^Successful!")
